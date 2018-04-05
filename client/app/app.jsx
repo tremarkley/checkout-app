@@ -13,6 +13,7 @@ class App extends React.Component {
     };
     this.clickNext = this.clickNext.bind(this);
     this.clickCheckout = this.clickCheckout.bind(this);
+    this.exitCheckout = this.exitCheckout.bind(this);
   }
 
   clickCheckout() {
@@ -25,6 +26,12 @@ class App extends React.Component {
     this.setState(prevState => ({ activeForm: prevState.activeForm + 1 }));
   }
 
+  exitCheckout() {
+    this.setState({
+      activeForm: 0,
+    });
+  }
+
   render() {
     switch (this.state.states[this.state.activeForm]) {
       case 'AccountInfo':
@@ -34,7 +41,7 @@ class App extends React.Component {
       case 'PaymentInfo':
         return <PaymentInfo clickNext={this.clickNext} />;
       case 'Success':
-        return <Success />;
+        return <Success exitCheckout={this.exitCheckout} />;
       default:
         return <button onClick={this.clickCheckout}>Checkout</button>;
     }
