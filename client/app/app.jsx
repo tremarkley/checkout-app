@@ -11,20 +11,39 @@ class App extends React.Component {
       states: ['Checkout', 'AccountInfo', 'ContactInfo', 'PaymentInfo', 'Success'],
       activeForm: 0,
       accountInfo: {
-        name: undefined,
-        email: undefined,
-        password: undefined,
+        name: '',
+        email: '',
+        password: '',
+      },
+      contactInfo: {
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        zipCode: '',
+        phoneNumber: '',
       },
     };
-    this.clickNext = this.clickNext.bind(this);
+    this.nextForm = this.nextForm.bind(this);
     this.clickCheckout = this.clickCheckout.bind(this);
     this.exitCheckout = this.exitCheckout.bind(this);
     this.setAccountInfo = this.setAccountInfo.bind(this);
+    this.setContactInfo = this.setContactInfo.bind(this);
   }
 
   setAccountInfo({ name, email, password }) {
     this.setState({
       accountInfo: { name, email, password },
+    });
+  }
+
+  setContactInfo({
+    addressLine1, addressLine2, city, state, zipCode, phoneNumber,
+  }) {
+    this.setState({
+      contactInfo: {
+        addressLine1, addressLine2, city, state, zipCode, phoneNumber,
+      },
     });
   }
 
@@ -34,7 +53,7 @@ class App extends React.Component {
     });
   }
 
-  clickNext() {
+  nextForm() {
     this.setState(prevState => ({ activeForm: prevState.activeForm + 1 }));
   }
 
@@ -47,13 +66,13 @@ class App extends React.Component {
   render() {
     switch (this.state.states[this.state.activeForm]) {
       case 'AccountInfo':
-        return <AccountInfo clickNext={this.clickNext} setAccountInfo={this.setAccountInfo} />;
+        return <AccountInfo nextForm={this.nextForm} setAccountInfo={this.setAccountInfo} />;
       case 'ContactInfo':
-        return <ContactInfo clickNext={this.clickNext} />;
+        return <ContactInfo nextForm={this.nextForm} setContactInfo={this.setContactInfo} />;
       case 'PaymentInfo':
-        return <PaymentInfo clickNext={this.clickNext} />;
+        return <PaymentInfo nextForm={this.nextForm} />;
       case 'Success':
-        return <Success exitCheckout={this.exitCheckout} accountInfo={this.state.accountInfo} />;
+        return <Success exitCheckout={this.exitCheckout} accountInfo={this.state.accountInfo} contactInfo={this.state.contactInfo} />;
       default:
         return <button onClick={this.clickCheckout}>Checkout</button>;
     }

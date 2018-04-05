@@ -9,7 +9,7 @@ class accountInfo extends React.Component {
       email: '',
       password: '',
     };
-    this.nextClick = this.nextClick.bind(this);
+    this.clickNext = this.clickNext.bind(this);
   }
 
   handleChange(event, field) {
@@ -18,9 +18,9 @@ class accountInfo extends React.Component {
     this.setState(nextState);
   }
 
-  nextClick() {
+  clickNext() {
     this.props.setAccountInfo(this.state);
-    this.props.clickNext();
+    this.props.nextForm();
   }
 
   render() {
@@ -39,14 +39,14 @@ class accountInfo extends React.Component {
           Password:
           <input id="password" type="password" value={this.state.password} onChange={event => this.handleChange(event, 'password')} />
         </label>
-        <button onClick={this.nextClick}>Next</button>
+        <button onClick={this.clickNext}>Next</button>
       </div>
     );
   }
 }
 
 accountInfo.propTypes = {
-  clickNext: PropTypes.func.isRequired,
+  nextForm: PropTypes.func.isRequired,
   setAccountInfo: PropTypes.func.isRequired,
 };
 
