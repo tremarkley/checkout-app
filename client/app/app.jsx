@@ -10,20 +10,22 @@ class App extends React.Component {
     this.state = {
       states: ['Checkout', 'AccountInfo', 'ContactInfo', 'PaymentInfo', 'Success'],
       activeForm: 0,
+      accountInfo: {
+        name: undefined,
+        email: undefined,
+        password: undefined,
+      },
     };
     this.clickNext = this.clickNext.bind(this);
     this.clickCheckout = this.clickCheckout.bind(this);
     this.exitCheckout = this.exitCheckout.bind(this);
+    this.setAccountInfo = this.setAccountInfo.bind(this);
   }
 
-  clickCheckout() {
+  setAccountInfo({ name, email, password }) {
     this.setState({
-      activeForm: 1,
+      accountInfo: { name, email, password },
     });
-  }
-
-  clickNext() {
-    this.setState(prevState => ({ activeForm: prevState.activeForm + 1 }));
   }
 
   exitCheckout() {
@@ -32,16 +34,26 @@ class App extends React.Component {
     });
   }
 
+  clickNext() {
+    this.setState(prevState => ({ activeForm: prevState.activeForm + 1 }));
+  }
+
+  clickCheckout() {
+    this.setState({
+      activeForm: 1,
+    });
+  }
+
   render() {
     switch (this.state.states[this.state.activeForm]) {
       case 'AccountInfo':
-        return <AccountInfo clickNext={this.clickNext} />;
+        return <AccountInfo clickNext={this.clickNext} setAccountInfo={this.setAccountInfo} />;
       case 'ContactInfo':
         return <ContactInfo clickNext={this.clickNext} />;
       case 'PaymentInfo':
         return <PaymentInfo clickNext={this.clickNext} />;
       case 'Success':
-        return <Success exitCheckout={this.exitCheckout} />;
+        return <Success exitCheckout={this.exitCheckout} accountInfo={this.state.accountInfo} />;
       default:
         return <button onClick={this.clickCheckout}>Checkout</button>;
     }
