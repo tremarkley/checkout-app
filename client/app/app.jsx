@@ -23,12 +23,19 @@ class App extends React.Component {
         zipCode: '',
         phoneNumber: '',
       },
+      paymentInfo: {
+        creditCardNumber: '',
+        expiryDate: '',
+        CVV: '',
+        zipCode: '',
+      },
     };
     this.nextForm = this.nextForm.bind(this);
     this.clickCheckout = this.clickCheckout.bind(this);
     this.exitCheckout = this.exitCheckout.bind(this);
     this.setAccountInfo = this.setAccountInfo.bind(this);
     this.setContactInfo = this.setContactInfo.bind(this);
+    this.setPaymentInfo = this.setPaymentInfo.bind(this);
   }
 
   setAccountInfo({ name, email, password }) {
@@ -43,6 +50,16 @@ class App extends React.Component {
     this.setState({
       contactInfo: {
         addressLine1, addressLine2, city, state, zipCode, phoneNumber,
+      },
+    });
+  }
+
+  setPaymentInfo({
+    creditCardNumber, expiryDate, CVV, zipCode,
+  }) {
+    this.setState({
+      paymentInfo: {
+        creditCardNumber, expiryDate, CVV, zipCode,
       },
     });
   }
@@ -70,9 +87,14 @@ class App extends React.Component {
       case 'ContactInfo':
         return <ContactInfo nextForm={this.nextForm} setContactInfo={this.setContactInfo} />;
       case 'PaymentInfo':
-        return <PaymentInfo nextForm={this.nextForm} />;
+        return <PaymentInfo nextForm={this.nextForm} setPaymentInfo={this.setPaymentInfo} />;
       case 'Success':
-        return <Success exitCheckout={this.exitCheckout} accountInfo={this.state.accountInfo} contactInfo={this.state.contactInfo} />;
+        return (<Success
+          exitCheckout={this.exitCheckout}
+          accountInfo={this.state.accountInfo}
+          contactInfo={this.state.contactInfo}
+          paymentInfo={this.state.paymentInfo}
+        />);
       default:
         return <button onClick={this.clickCheckout}>Checkout</button>;
     }
