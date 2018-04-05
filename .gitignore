@@ -1,0 +1,8 @@
+#Mac files
+.DS_STORE
+
+#Node 
+node_modules
+
+#webpack
+bundle.js
