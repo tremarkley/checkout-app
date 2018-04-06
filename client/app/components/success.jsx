@@ -23,7 +23,7 @@ const success = props => (
       <p>CVV: {props.paymentInfo.CVV}</p>
       <p>Zip Code: {props.paymentInfo.zipCode}</p>
     </div>
-    <button onClick={props.exitCheckout}>Return</button>
+    <button onClick={props.exitCheckout}>Purchase</button>
   </div>
 );
 
