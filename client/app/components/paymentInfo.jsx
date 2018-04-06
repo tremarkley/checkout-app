@@ -8,7 +8,7 @@ class paymentInfo extends React.Component {
       creditCardNumber: '',
       expiryDate: '',
       CVV: '',
-      zipCode: '',
+      billingZipCode: '',
     };
     this.clickNext = this.clickNext.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -43,7 +43,7 @@ class paymentInfo extends React.Component {
         </label>
         <label htmlFor="zipcode">
           Zip Code:
-          <input id="zipcode" type="text" value={this.state.zipCode} onChange={event => this.handleChange(event, 'zipCode')} />
+          <input id="zipcode" type="text" value={this.state.billingZipCode} onChange={event => this.handleChange(event, 'billingZipCode')} />
         </label>
         <button onClick={this.clickNext}>Next</button>
       </div>

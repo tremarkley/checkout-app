@@ -27,7 +27,7 @@ class App extends React.Component {
         creditCardNumber: '',
         expiryDate: '',
         CVV: '',
-        zipCode: '',
+        billingZipCode: '',
       },
     };
     this.nextForm = this.nextForm.bind(this);
@@ -55,11 +55,11 @@ class App extends React.Component {
   }
 
   setPaymentInfo({
-    creditCardNumber, expiryDate, CVV, zipCode,
+    creditCardNumber, expiryDate, CVV, billingZipCode,
   }) {
     this.setState({
       paymentInfo: {
-        creditCardNumber, expiryDate, CVV, zipCode,
+        creditCardNumber, expiryDate, CVV, billingZipCode,
       },
     });
   }
