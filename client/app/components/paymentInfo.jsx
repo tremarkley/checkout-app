@@ -22,7 +22,6 @@ class paymentInfo extends React.Component {
 
   clickNext() {
     this.props.setPaymentInfo(this.state);
-    this.props.nextForm();
   }
 
   render() {
@@ -52,7 +51,6 @@ class paymentInfo extends React.Component {
 }
 
 paymentInfo.propTypes = {
-  nextForm: PropTypes.func.isRequired,
   setPaymentInfo: PropTypes.func.isRequired,
 };
 

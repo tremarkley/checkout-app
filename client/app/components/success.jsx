@@ -21,7 +21,7 @@ const success = props => (
       <p>Credit Card Number: {props.paymentInfo.creditCardNumber}</p>
       <p>Expiration Date: {props.paymentInfo.expiryDate}</p>
       <p>CVV: {props.paymentInfo.CVV}</p>
-      <p>Zip Code: {props.paymentInfo.zipCode}</p>
+      <p>Zip Code: {props.paymentInfo.billingZipCode}</p>
     </div>
     <button onClick={props.exitCheckout}>Purchase</button>
   </div>
@@ -46,7 +46,7 @@ success.propTypes = {
     creditCardNumber: PropTypes.string.isRequired,
     expiryDate: PropTypes.string.isRequired,
     CVV: PropTypes.string.isRequired,
-    zipCode: PropTypes.string.isRequired,
+    billingZipCode: PropTypes.string.isRequired,
   }).isRequired,
 };
 

@@ -5,7 +5,8 @@ const router = express.Router();
 
 router.post('/create', async (req, res) => {
   try {
-    await createNewRecord(req.body.information);
+    await createNewRecord(req.body);
+    res.send('success');
   } catch (error) {
     console.error(error);
     res.status(500).send('Something went wrong');

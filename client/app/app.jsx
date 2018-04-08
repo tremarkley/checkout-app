@@ -1,8 +1,11 @@
 import React from 'react';
+import axios from 'axios';
 import AccountInfo from './components/accountInfo';
 import ContactInfo from './components/contactInfo';
 import PaymentInfo from './components/paymentInfo';
 import Success from './components/success';
+
+const serverUrl = 'http://localhost:3434';
 
 class App extends React.Component {
   constructor(props) {
@@ -36,6 +39,8 @@ class App extends React.Component {
     this.setAccountInfo = this.setAccountInfo.bind(this);
     this.setContactInfo = this.setContactInfo.bind(this);
     this.setPaymentInfo = this.setPaymentInfo.bind(this);
+    this.completeCheckout = this.completeCheckout.bind(this);
+    this.saveCheckoutToDb = this.saveCheckoutToDb.bind(this);
   }
 
   setAccountInfo({ name, email, password }) {
@@ -61,6 +66,8 @@ class App extends React.Component {
       paymentInfo: {
         creditCardNumber, expiryDate, CVV, billingZipCode,
       },
+    }, () => {
+      this.completeCheckout();
     });
   }
 
@@ -80,6 +87,28 @@ class App extends React.Component {
     });
   }
 
+  async completeCheckout() {
+    try {
+      await this.saveCheckoutToDb();
+      this.nextForm();
+    } catch (error) {
+      alert(`${error}`);
+    }
+  }
+
+  async saveCheckoutToDb() {
+    const information = {
+      ...this.state.accountInfo,
+      ...this.state.contactInfo,
+      ...this.state.paymentInfo,
+    };
+    try {
+      await axios.post(`${serverUrl}/checkout/create`, information);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   render() {
     switch (this.state.states[this.state.activeForm]) {
       case 'AccountInfo':
@@ -87,7 +116,7 @@ class App extends React.Component {
       case 'ContactInfo':
         return <ContactInfo nextForm={this.nextForm} setContactInfo={this.setContactInfo} />;
       case 'PaymentInfo':
-        return <PaymentInfo nextForm={this.nextForm} setPaymentInfo={this.setPaymentInfo} />;
+        return <PaymentInfo setPaymentInfo={this.setPaymentInfo} />;
       case 'Success':
         return (<Success
           exitCheckout={this.exitCheckout}

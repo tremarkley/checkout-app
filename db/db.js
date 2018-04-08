@@ -7,7 +7,8 @@ let db;
 const connectMongo = () => (
   new Promise(async (resolve, reject) => {
     try {
-      db = await MongoClient.connect(url);
+      const connection = await MongoClient.connect(url);
+      db = connection.db('cart-app');
       resolve();
     } catch (error) {
       reject(error);
